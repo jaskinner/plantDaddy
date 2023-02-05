@@ -24,12 +24,6 @@ def index():
 
 	result = request.args.get("result")
 	return render_template("index.html", result=Markup(result))
-#     return app
     
 def generate_prompt(plant):
-    url = "http://captainbonnysplantery.com/product-category/allplants/"
-    response = requests.get(url)
-
-    print(response)
-
     return "Tell me how to care for a {} plant, which three are very similar in care instructions? send the answer in html format so it's easy to read please.".format(plant)
