@@ -15,10 +15,10 @@ def index():
         temp = request.form["temp"]
         humidity = request.form["humidity"]
 
-        if temp is None:
+        if temp and humidity:
             response = openai.Completion.create(
                 model="text-davinci-003",
-                prompt=plant_rec(plant),
+                prompt=plant_env(plant, temp, humidity),
                 max_tokens=1024,
                 n=1,
                 stop=None,
@@ -27,7 +27,7 @@ def index():
         else:
             response = openai.Completion.create(
                 model="text-davinci-003",
-                prompt=plant_env(plant, temp, humidity),
+                prompt=plant_rec(plant),
                 max_tokens=1024,
                 n=1,
                 stop=None,
