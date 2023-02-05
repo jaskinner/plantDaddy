@@ -18,7 +18,7 @@ def index():
             max_tokens=1024,
             n=1,
             stop=None,
-            temperature=0.5
+            temperature=0.1
         )
         return redirect(url_for("index", result=response.choices[0].text))
 
@@ -27,4 +27,9 @@ def index():
     return render_template("index.html", result=Markup(result))
     
 def generate_prompt(plant):
-    return "Tell me how to care for a {} plant, which three are very similar in care instructions? send the answer in html format so it's easy to read please.".format(plant)
+    return """Based on the following criteria, if the Name represents a plant, what are care instructions for it?
+                If it's not a plant, ask to repeat.
+                Please respond in a block of html/css for readability
+
+Plant Name: {}
+""".format(plant)
