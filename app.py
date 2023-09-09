@@ -56,3 +56,11 @@ Plant Name: {}
 Average Home Temperature: {}
 Average Home Humidity: {}
 """.format(plant, temp, humidity)
+
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    return "Healthy", 200
