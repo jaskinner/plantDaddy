@@ -1,9 +1,7 @@
 import os, requests
-
 import openai
 from flask import Flask, redirect, render_template, request, url_for, Markup
 
-# def create_app(*args, **kwargs):
 app = Flask(__name__)
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -14,11 +12,12 @@ def index():
         plant = request.form["plant"]
         temp = request.form["temp"]
         humidity = request.form["humidity"]
+        temp_unit = request.form.get("temp_unit", "F")  # assuming you have a field named "temp_unit" in your form
 
         if temp and humidity:
             response = openai.Completion.create(
                 model="text-davinci-003",
-                prompt=plant_env(plant, temp, humidity),
+                prompt=plant_env(plant, temp, humidity, temp_unit),
                 max_tokens=1024,
                 n=1,
                 stop=None,
@@ -48,19 +47,15 @@ def plant_rec(plant):
 Plant Name: {}
 """.format(plant)
 
-def plant_env(plant, temp, humidity):
+def plant_env(plant, temp, humidity, temp_unit):
     return """Based on the following criteria, is this a good plant for my home environment?
                 Please respond in a block of html/css for readability
 
 Plant Name: {}
-Average Home Temperature: {}
-Average Home Humidity: {}
-""".format(plant, temp, humidity)
+Average Home Temperature: {}°{}
+Average Home Humidity: {}%
+""".format(plant, temp, temp_unit, humidity)
 
+# Run this at the bottom to execute the app when this script is run
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-
-@app.route('/health', methods=['GET'])
-def health_check():
-    return "Healthy", 200
+    app.run()
