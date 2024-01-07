@@ -1,31 +1,25 @@
 <!DOCTYPE html>
+<html>
 <head>
-  <title>plantDaddy</title>
-  <link
-    rel="shortcut icon"
-    href="{{ url_for('static', filename='plant.png') }}"
-  />
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <title>OpenAI Recipe Assistant</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.png') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
-
 <body>
-  <img src="{{ url_for('static', filename='plant.png') }}" class="icon" />
-  <h3>plantDaddy</h3>
-  <form action="/" method="post">
-    <p>for plant care instructions, tell me what plant you have</p>
-    <p>to find out if your home is ideal for your plant, tell me the average temperature and/or humidity in your home as well.</p>
-    <input type="text" name="plant" placeholder="What plant do you have?" required />
-    <input type="text" name="temp" placeholder="What is the average temperature in your home?" />
-    <label for="temp_unit">Temperature Unit:</label>
-    <select name="temp_unit">
-        <option value="F" selected>Fahrenheit</option>
-        <option value="C">Celsius</option>
-    </select>
-    <input type="text" name="humidity" placeholder="What is the average humidity in your home?" />
-    <input type="submit" value="Help me daddy" />
-  </form>
-  {% if result %}
-  <div class="result">{{ result }}</div>
-  {% endif %}
-  I'm a website, not a botanist. Use at your own risk.
+    <img src="{{ url_for('static', filename='icon.png') }}" class="icon" />
+    <h3>OpenAI Recipe Assistant</h3>
+    <form action="/" method="post">
+        <p>Enter the ingredients you have, separated by commas:</p>
+        <input type="text" name="foods" placeholder="List your ingredients" required />
+        <p>What type of meal are you looking to prepare? (e.g., breakfast, lunch, dinner)</p>
+        <input type="text" name="meal" placeholder="Type of meal" required />
+        <input type="submit" value="Find Recipes" />
+    </form>
+    {% if result %}
+    <div class="result">{{ result }}</div>
+    {% endif %}
+    <footer>
+        <p>This is an AI-powered recipe suggestion tool. Use at your own discretion.</p>
+    </footer>
 </body>
+</html>
